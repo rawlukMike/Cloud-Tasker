@@ -1,0 +1,27 @@
+{
+    // Użyj funkcji IntelliSense, aby uzyskać informacje o możliwych atrybutach.
+    // Najedź kursorem, aby wyświetlić opisy istniejących atrybutów.
+    // Aby uzyskać więcej informacji, odwiedź stronę: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Cloud Task Server",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            //python3 client.py projects/my-project-1503596298622/topics/cloud-tasker projects/my-project-1503596298622/subscriptions/cloud-tasker-listener
+            "args": ["projects/my-project-1503596298622/topics/cloud-tasker","projects/my-project-1503596298622/subscriptions/cloud-tasker-listener"]
+        },
+        {
+            "name": "Cloud Task Client",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            //python3 client.py projects/my-project-1503596298622/topics/cloud-tasker projects/my-project-1503596298622/subscriptions/cloud-tasker-result
+            "args": ["projects/my-project-1503596298622/topics/cloud-tasker","projects/my-project-1503596298622/subscriptions/cloud-tasker-result"]
+        }
+    ]
+}
