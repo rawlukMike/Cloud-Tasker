@@ -1,8 +1,6 @@
 # Cloud-Tasker
-Simple solution to run commands through event driven cloud solutions:
-GCP [alpha]
-Azure [todo]
-AWS [todo]
+Simple solution to run commands through event driven cloud solutions.
+Currently support GCP PubSub Only
 
 ### Requirements :
   python3 -m pip install --upgrade pip setuptools wheel
