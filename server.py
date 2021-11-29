@@ -92,7 +92,8 @@ try:
             request={
                 "name": serverSub_listener,
                 "topic": topic_id,
-                "filter": filterListener
+                "filter": filterListener,
+                "labels": {"cloudtasker":server_id}
                 }
         )
         print("\tListener Subscription: Created")
@@ -100,7 +101,8 @@ try:
             request={
                 "name": serverSub_result,
                 "topic": topic_id,
-                "filter": filterResult
+                "filter": filterResult,
+                "labels": {"cloudtasker":server_id}
                 }
         )
         print("\tResult Subscription: Created")
