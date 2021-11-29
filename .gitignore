@@ -132,3 +132,5 @@ dmypy.json
 .pyre/
 .vscode/launch.json
 .vscode/settings.json
+server.bat
+client.bat

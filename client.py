@@ -1,16 +1,77 @@
-import sys
+import sys, argparse
 from google.cloud import pubsub_v1
 import tkinter as tk                    
 from tkinter import ttk
 
+
+parser = argparse.ArgumentParser(add_help=True)
+parser.add_argument('-n', action='store',
+                    dest='server_id',
+                    help='Server Name',
+                    required=True)
+
+parser.add_argument('-t', action='store',
+                    dest='topic_id',
+                    help='Tasker topic format: projects/#PROJECT-ID#/topics/#TOPIC-NAME#',
+                    required=True)
+
+parser.add_argument('-s', action='store',
+                    dest='resultSub_id',
+                    help='Result Sub format: projects/#PROJECT-ID#/subscriptions/#subscription-NAME#',
+                    required=True)
+
+parser.add_argument('--version', action='version',
+                    version='%(prog)s 1.0')
+
+results = parser.parse_args()
+
+server_id = results.server_id
+topic_id = results.topic_id
+sub_id = results.resultSub_id
+project_id = topic_id.split("/")[1]
+topic_name = topic_id.split("/")[3]
+
+subscriber = pubsub_v1.SubscriberClient()
 publisher = pubsub_v1.PublisherClient()
-topicPath = ""
+
+def sendCmd():
+    x = cmdEntry.get()
+    publisher.publish(topic_id, x.encode(), serverid=server_id)
+
+win = tk.Tk()
+win.title("Cloud-Tasker Client")
+win.geometry("700x300+10+10")
+servLbl=tk.Label(win, text=server_id)
+cmdLbl=tk.Label(win, text='Command:')
+resultLbl=tk.Label(win, text='Result:')
+cmdEntry=tk.Entry(win, bd=2, width=67)
+resultText=tk.Text(win, bd=2,width=50)
+sendBtn=tk.Button(win, text="Send", command=sendCmd)
+
+servLbl.place(x=180,y=10)
+cmdLbl.place(x=15,y=40)
+cmdEntry.place(x=90, y=40)
+sendBtn.place(x=530,y=37)
+resultLbl.place(x=15,y=80)
+resultText.place(x=90,y=81)
+
+def callback(message: pubsub_v1.subscriber.message.Message) -> None:
+    result = message.data.decode()
+    resultText.delete(tk.INSERT, tk.END)
+    resultText.insert(1.0, result)
+    message.ack()
+
+streaming_pull_future = subscriber.subscribe(sub_id, callback=callback)
 
 
-if len(sys.argv) == 2:
-    project_id = sys.argv[1].split("/")[1]
-    topicPath = sys.argv[1]
+win.mainloop()
 
+
+
+
+
+
+'''
 def detectServers():
     subscriber = pubsub_v1.SubscriberClient()
     servers = set()
@@ -21,73 +82,7 @@ def detectServers():
                 servers.add(subscription.labels["cloudtasker"])
     print(servers)
     drawServerTabs(servers)
-
-def drawServerTabs(servers):
-    serverTabs = {}
-    for server in servers:
-        x = {}
-        x["input"] = tk.StringVar()
-        y = ttk.Frame(tabControl)
-        ttk.Label(y, 
-        text ="Input:").grid(
-            column = 0, 
-            row = 0)
-        ttk.Label(y,
-        text ="Result:").grid(
-            column = 2, 
-            row = 0)
-        ttk.Entry(y, textvariable = x["input"]).grid(
-        column = 0, 
-        row = 1)
-        r = tk.Text(y).grid(
-        column=1, row=1)
-        x["result"] = r
-        x["tab"] = y
-    serverTabs[server] = x
-    for x in serverTabs.keys():
-        tabControl.add(serverTabs[x]["tab"], text=x)
-        
-
-  
-root = tk.Tk()
-root.title("Cloud-Tasker Client")
-
-tabControl = ttk.Notebook(root)
-  
-SettingsTab = ttk.Frame(tabControl)
-
-topic_id = tk.StringVar()
-topic_id.set(topicPath)
-
-ttk.Label(SettingsTab, 
-    text ="Input your topic path:").grid(
-        column = 0, 
-        row = 0,
-        padx = 10,
-        pady = 20)
-ttk.Entry(SettingsTab, textvariable=topic_id).grid(
-        column = 1, 
-        row = 0,
-        padx = 10,
-        pady = 20)
-
-ttk.Button(SettingsTab, text ="Connect", command = detectServers).grid(
-        column = 1, 
-        row = 1,
-        padx = 10,
-        pady = 20)
-  
-tabControl.add(SettingsTab, text ='Settings')
-tabControl.pack(expand = 1, fill ="both")
-
-root.mainloop()
-
-
-
-
-
-
-
+'''
 
 
 '''
