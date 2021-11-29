@@ -3,9 +3,8 @@ from concurrent.futures import TimeoutError
 from google.cloud import pubsub_v1
 
 if len(sys.argv) != 3:
-    print("Cloud tasker Client usage: python3 server.py <tasker topic> <result subscription>")
+    print("Cloud tasker Client usage: python3 server.py <tasker topic>")
     print("Tasker topic format: projects/#PROJECT-ID#/topics/#TOPIC-ID#")
-    print("Listener subscription format: projects/#PROJECT-ID#/subscriptions/#SUBSCRIPTION-ID#")
 
 sub_result_id = sys.argv[2]
 pub_cmd_id = sys.argv[1]
