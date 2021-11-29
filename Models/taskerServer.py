@@ -19,7 +19,7 @@ class CloudTaskerServer:
             cmder = subprocess.run(command, stdout=subprocess.PIPE)
             result = f"COMMAND:\n{cmd} \nRESULT: \n"+cmder.stdout.decode()
             print(result)
-            self.publisher.publish(self.resultTop, data=result.encode(), result="OK")
+            self.publisher.publish(self.resultTop, data=result.encode(), result="OK", serverid=self.serverId)
             print("PUBLISHED RESULTS")
         except subprocess.CalledProcessError:
             self.publisher.publish(self.resultTop, data=b"Command failed during execution: PROCESS ERROR", result="FAILED", serverid=self.serverId)
