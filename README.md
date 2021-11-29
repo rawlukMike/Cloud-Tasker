@@ -16,4 +16,8 @@ Server will create subscription and list you name, but it will be in format: you
 ### Screenshot:
 
 Server:
-  ![image](https://user-images.githubusercontent.com/7016538/142743261-333497d9-0915-4b34-b4d8-a9c8f1dc0d31.png)
+![image](https://user-images.githubusercontent.com/7016538/143961024-2e944760-8393-486a-a417-81aac2227e8b.png)
+
+Client:
+![image](https://user-images.githubusercontent.com/7016538/143961091-3d22c557-2ec4-4ef2-8970-6aac21607466.png)
+
