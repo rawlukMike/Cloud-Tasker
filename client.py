@@ -31,7 +31,6 @@ sub_id = results.resultSub_id
 project_id = topic_id.split("/")[1]
 topic_name = topic_id.split("/")[3]
 
-subscriber = pubsub_v1.SubscriberClient()
 publisher = pubsub_v1.PublisherClient()
 
 def sendCmd():
@@ -55,20 +54,17 @@ sendBtn.place(x=530,y=37)
 resultLbl.place(x=15,y=80)
 resultText.place(x=90,y=81)
 
-def callback(message: pubsub_v1.subscriber.message.Message) -> None:
-    result = message.data.decode()
-    resultText.delete(tk.INSERT, tk.END)
-    resultText.insert(1.0, result)
-    message.ack()
+with pubsub_v1.SubscriberClient() as subscriber:
 
-streaming_pull_future = subscriber.subscribe(sub_id, callback=callback)
+    def callback(message: pubsub_v1.subscriber.message.Message) -> None:
+        result = message.data.decode()
+        resultText.delete(1.0, tk.END)
+        resultText.insert(1.0, result)
+        message.ack()
 
+    streaming_pull_future = subscriber.subscribe(sub_id, callback=callback)
 
-win.mainloop()
-
-
-
-
+    win.mainloop()
 
 
 '''
@@ -82,39 +78,4 @@ def detectServers():
                 servers.add(subscription.labels["cloudtasker"])
     print(servers)
     drawServerTabs(servers)
-'''
-
-
-'''
-if len(sys.argv) != 3:
-    print("Cloud tasker Client usage: python3 client.py <tasker topic>")
-    print("Tasker topic format: projects/#PROJECT-ID#/topics/#TOPIC-ID#")
-
-sub_result_id = sys.argv[2]
-pub_cmd_id = sys.argv[1]
-
-subscriber = pubsub_v1.SubscriberClient()
-publisher = pubsub_v1.PublisherClient()
-
-def sendCmd():
-    cmd = input("\n*********\nINPUT COMMAND:\n\t")
-    publisher.publish(pub_cmd_id, cmd.encode())
-
-def callback(message: pubsub_v1.subscriber.message.Message) -> None:
-    result = message.data.decode()
-    print(f"\nReceived:\n {result}.\n")
-    message.ack()
-    sendCmd()
-
-print(f"Listening for results on {sub_result_id}..\n")
-streaming_pull_future = subscriber.subscribe(sub_result_id, callback=callback)
-
-sendCmd()
-
-with subscriber:
-    try:
-        streaming_pull_future.result()
-    except TimeoutError:
-        streaming_pull_future.cancel()
-        streaming_pull_future.result()
 '''
