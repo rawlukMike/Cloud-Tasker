@@ -1,10 +1,8 @@
-import sys, getopt, atexit
-from typing import final
-from google.cloud import pubsub_v1
-from time import sleep
-from Models.taskerServer import CloudTaskerServer
+import sys
 import argparse
 from pyfiglet import Figlet
+from google.cloud import pubsub_v1
+from Models.taskerServer import CloudTaskerServer
 
 
 parser = argparse.ArgumentParser(add_help=True)

@@ -1,5 +1,4 @@
 import sys
-from concurrent.futures import TimeoutError
 from google.cloud import pubsub_v1
 
 if len(sys.argv) != 3:
@@ -8,9 +7,6 @@ if len(sys.argv) != 3:
 
 sub_result_id = sys.argv[2]
 pub_cmd_id = sys.argv[1]
-
-global subscriber
-global publisher
 
 subscriber = pubsub_v1.SubscriberClient()
 publisher = pubsub_v1.PublisherClient()
