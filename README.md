@@ -10,6 +10,7 @@ Currently support GCP PubSub Only
   
 ## Usage Server:
 Server will create subscription and list you name (yourtopic-servername-result).
+
   `python3 server.py -n servername -t projects/sample-project/topics/yourtopic`
 
 ## Screenshot:
