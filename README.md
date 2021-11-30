@@ -6,12 +6,11 @@ Currently support GCP PubSub Only
   `python3 -m pip install --upgrade google-cloud-pubsub pyfiglet`
 
 ## Usage Client:
-Server will create subscription and list you name, but it will be in format: your-topic-server-name-result
-
-  `python3 client.py -n server-name -t projects/sample-project/topics/your-topic -s projects/sample-project/subscriptions/your-topic-server-name-result`
+  `python3 client.py -n servername -t projects/sample-project/topics/yourtopic -s projects/sample-project/subscriptions/yourtopicservernameresult`
   
 ## Usage Server:
-  `python3 server.py -n server-name -t projects/sample-project/topics/your-topic`
+Server will create subscription and list you name (yourtopic-servername-result).
+  `python3 server.py -n servername -t projects/sample-project/topics/yourtopic`
 
 ## Screenshot:
 
