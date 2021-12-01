@@ -21,6 +21,12 @@ parser.add_argument('-m', action='store_true',
                     dest='multiple_mode',
                     help='If server should work in many instances mode')
 
+parser.add_argument('-c', action='store',
+                    default=False,
+                    dest='config_file',
+                    help='Json config file. {"allow-remote-close":false, allow_cmd:["sample-cmd1","cmd2"]}',
+                    required=False)
+
 parser.add_argument('--version', action='version',
                     version='%(prog)s 1.0')
 
@@ -28,6 +34,7 @@ results = parser.parse_args()
 
 server_id = results.server_id
 topic_id = results.topic_id
+cmd_config = results.config_file
 multiple_servers = results.multiple_mode
 project_id = topic_id.split("/")[1]
 topic_name = topic_id.split("/")[3]
@@ -108,7 +115,7 @@ try:
         print("\tResult Subscription: Created")
 
     # RUN SERVER    
-    server = CloudTaskerServer(server_id, serverSub_listener, topic_id)
+    server = CloudTaskerServer(server_id, serverSub_listener, topic_id, cmd_config)
     server.run()
 except Exception as e:
     print (e)
