@@ -14,9 +14,24 @@ It's also an alternative to startup script, since It can be runned as any user a
   `python3 client.py -n servername -t projects/sample-project/topics/yourtopic -s projects/sample-project/subscriptions/yourtopicservernameresult`
   
 ## Usage Server:
+
+### Whitelist
+You can pass json file in format:
+`
+{
+    "whitelist" : [
+        "sample-cmd1",
+        "cmd2"
+    ]
+}`
+
+as config param -c. Server will only run cmd same as whitelist.
+This is optional parameter. Server will allow every other cmd otherwise.
+
+### Running
 Server will create subscription and list you name (yourtopic-servername-result).
 
-  `python3 server.py -n servername -t projects/sample-project/topics/yourtopic`
+  `python3 server.py -n servername -t projects/sample-project/topics/yourtopic -c whitelist.json`
 
 ## Screenshot:
 
