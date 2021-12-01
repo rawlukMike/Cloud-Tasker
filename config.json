@@ -1,0 +1,7 @@
+{
+    "allow-remote-close":false,
+    "whitelist" : [
+        "sample-cmd1",
+        "cmd2"
+    ]
+}
